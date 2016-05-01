@@ -10,7 +10,7 @@ ArrayList<Vehicle> vehicles;
 
 void setup() {
   size(1020,720);
-  int streetSize = 7;
+  int streetSize = 10;
   int blockSize = 120;
   blocks = new Block[streetSize][streetSize];
   for (int i = 0; i < streetSize; i++) {
@@ -18,7 +18,7 @@ void setup() {
       if(i%2 == 0 && j%2 ==2){
         blocks[i][j] = new Block(true);
       }else{
-        blocks[i][j] = new Block(new PVector(blockSize*j+100,blockSize*i+30),new PVector(blockSize*j+100,blockSize*(i+1)+30));
+        blocks[i][j] = new Block(new PVector(blockSize*j+90,blockSize*i+20),new PVector(blockSize*j+90,blockSize*(i+1)+20));
       }
     }
   }
@@ -27,8 +27,8 @@ void setup() {
   
   for (int i = 0; i < streetSize; i++) {
     if(i%2 != 0){
-       pathsL.add(newPathHor(blocks[i]));
-       pathsL.add(newPathVer(getColumn(blocks, i)));
+       newPathHor(blocks[i]);
+       newPathVer(getColumn(blocks, i));
     }
     //System.out.println("HOLA"+i);
   }
@@ -36,7 +36,28 @@ void setup() {
   // We are now making random vehicles and storing them in an ArrayList
   vehicles = new ArrayList<Vehicle>();
   for (int i = 0; i < 12; i++) {
-    newVehicle(random(width),random(height));
+    int pathx = (int)random(1);
+    int pathy = (int)random(5);
+    pathx = (int)random(3);
+    while(pathy %2 == 0){
+      pathy = (int)random(5);
+    }
+    PVector initPosition = blocks[0][1].partOne.initP;
+    switch(pathx){
+      case 0:
+        initPosition = blocks[0][pathy].partOne.initP;
+        break;
+      case 1:
+        initPosition = blocks[pathy][0].partOne.initP;
+        break;
+      case 2:
+        initPosition = blocks[streetSize-1][pathy].partOne.initP;
+        break;
+      case 3:
+        initPosition = blocks[pathy][streetSize-1].partOne.initP;
+        break;
+    }
+    newVehicle(initPosition.x,initPosition.y);
   }
 }
 
@@ -61,31 +82,37 @@ void draw() {
   text("Hit 'd' to toggle debugging lines.\nClick the mouse to generate new vehicles.",width/2,height-20);
 }
 
-Path newPathVer(Block [] block) {
+void newPathVer(Block [] block) {
   // A path is a series of connected points
   // A more sophisticated path might be a curve
   Path path = new Path();
-  float offset = 30;
+  Path path2 = new Path();
   for(Block x:block){
     path.addPointVector(x.partOne.initP);
     path.addPointVector(x.partOne.finalP);
+    
+    path2.addPointVector(x.partTwo.initP);
+    path2.addPointVector(x.partTwo.finalP);
   }
-  
-  return path;
+  pathsL.add(path);
+  pathsL.add(path2);
 }
 
-Path newPathHor(Block [] block) {
+void newPathHor(Block [] block) {
   // A path is a series of connected points
   // A more sophisticated path might be a curve
   Path path = new Path();
-  float offset = 30;
+  Path path2 = new Path();
   for(Block x:block){
     path.addPointVector(x.partTwo.finalP);
     path.addPointVector(x.partOne.initP);
     
+    path2.addPoint(x.partTwo.initP.x,x.partTwo.initP.y-98);
+    path2.addPoint(x.partOne.finalP.x,x.partOne.finalP.y-98);
+    
   }
-  
-  return path;
+  pathsL.add(path);
+  pathsL.add(path2);
 }
 
 
