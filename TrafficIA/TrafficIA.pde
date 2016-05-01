@@ -7,6 +7,7 @@ ArrayList<Path> pathsL = new ArrayList<Path>();
 Block [][]blocks;
 //Tamaño de las "Ciudad" N X N.
 int streetSize = 9;
+int carNum = 120;
 //Lista de los vehiculos(Agentes).
 ArrayList<Vehicle> vehicles;
 
@@ -25,7 +26,7 @@ void initStreet(){
       if(i%2 == 0 && j%2 ==2){
         blocks[i][j] = new Block(true);
       }else{
-        blocks[i][j] = new Block(new PVector(blockSize*j+10,blockSize*i+10),new PVector(blockSize*j+10,blockSize*(i+1)+10));
+        blocks[i][j] = new Block(new PVector(blockSize*j+10,blockSize*i-10),new PVector(blockSize*j+10,blockSize*(i+1)-10));
       }
     }
   }
@@ -45,12 +46,12 @@ void initVehicle(){
   // Se colocan los vehiculos en alguna posicion de inicio valida.
   
   vehicles = new ArrayList<Vehicle>();
-  for (int i = 0; i < 120; i++) {
+  for (int i = 0; i < carNum; i++) {
     int pathx = (int)random(1);
-    int pathy = (int)random(5);
+    int pathy = (int)random(streetSize);
     pathx = (int)random(4);
     while(pathy %2 == 0){
-      pathy = (int)random(5);
+      pathy = (int)random(streetSize);
     }
     PVector initPosition = blocks[0][1].partOne.initP;
     switch(pathx){

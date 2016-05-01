@@ -209,15 +209,13 @@ class Vehicle {
   // STEER = DESIRED MINUS VELOCITY
   PVector seek(PVector target) {
     PVector desired = PVector.sub(target, location);  // A vector pointing from the location to the target
-
     // Normalize desired and scale to maximum speed
     desired.normalize();
     desired.mult(maxspeed);
     // Steering = Desired minus Velocationity
     PVector steer = PVector.sub(desired, velocity);
     steer.limit(maxforce);  // Limit to maximum steering force
-
-      return steer;
+    return steer;
   }
 
 
@@ -234,8 +232,8 @@ class Vehicle {
   // Wraparound
   void borders() {
     if (location.x < -r) location.x = width+r;
-    //if (location.y < -r) location.y = height+r;
+    if (location.y < -r) location.y = height+r;
     if (location.x > width+r) location.x = -r;
-    //if (location.y > height+r) location.y = -r;
+    if (location.y > height+r) location.y = -r;
   }
 }
