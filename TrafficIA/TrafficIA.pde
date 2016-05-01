@@ -1,16 +1,23 @@
 boolean debug = false;
 
 
-// A path object (series of connected points)
+//Lista de caminos.
 ArrayList<Path> pathsL = new ArrayList<Path>();
+//Matriz en la cual se manejaran las cosas de las calles.
 Block [][]blocks;
-
-// Two vehicles
+//Tamaño de las "Ciudad" N X N.
+int streetSize = 9;
+//Lista de los vehiculos(Agentes).
 ArrayList<Vehicle> vehicles;
 
 void setup() {
-  size(1020,720);
-  int streetSize = 10;
+  size(1120,750);
+  initStreet();
+  initPaths();
+  initVehicle();
+}
+
+void initStreet(){
   int blockSize = 120;
   blocks = new Block[streetSize][streetSize];
   for (int i = 0; i < streetSize; i++) {
@@ -18,27 +25,30 @@ void setup() {
       if(i%2 == 0 && j%2 ==2){
         blocks[i][j] = new Block(true);
       }else{
-        blocks[i][j] = new Block(new PVector(blockSize*j+90,blockSize*i+20),new PVector(blockSize*j+90,blockSize*(i+1)+20));
+        blocks[i][j] = new Block(new PVector(blockSize*j+30,blockSize*i+20),new PVector(blockSize*j+30,blockSize*(i+1)+20));
       }
     }
   }
-  // Call a function to generate new Path object
-  //System.out.println(blocks[3][3].isBulding);
   
+}
+
+void initPaths(){
   for (int i = 0; i < streetSize; i++) {
     if(i%2 != 0){
        newPathHor(blocks[i]);
        newPathVer(getColumn(blocks, i));
     }
-    //System.out.println("HOLA"+i);
   }
+}
+
+void initVehicle(){
+  // Se colocan los vehiculos en alguna posicion de inicio valida.
   
-  // We are now making random vehicles and storing them in an ArrayList
   vehicles = new ArrayList<Vehicle>();
   for (int i = 0; i < 12; i++) {
     int pathx = (int)random(1);
     int pathy = (int)random(5);
-    pathx = (int)random(3);
+    pathx = (int)random(4);
     while(pathy %2 == 0){
       pathy = (int)random(5);
     }
@@ -59,11 +69,13 @@ void setup() {
     }
     newVehicle(initPosition.x,initPosition.y);
   }
+
 }
+
 
 void draw() {
   background(255);
-  // Display the path
+  // Muestra los caminos
   for(Path p:pathsL){
       p.display();
   }
@@ -83,8 +95,7 @@ void draw() {
 }
 
 void newPathVer(Block [] block) {
-  // A path is a series of connected points
-  // A more sophisticated path might be a curve
+  // Crea los dos carriles que tiene los caminos en este caso los caminos verticales
   Path path = new Path();
   Path path2 = new Path();
   for(Block x:block){
@@ -99,8 +110,7 @@ void newPathVer(Block [] block) {
 }
 
 void newPathHor(Block [] block) {
-  // A path is a series of connected points
-  // A more sophisticated path might be a curve
+  // Crea los dos carriles que tiene los caminos en este caso los caminos horizontales
   Path path = new Path();
   Path path2 = new Path();
   for(Block x:block){
