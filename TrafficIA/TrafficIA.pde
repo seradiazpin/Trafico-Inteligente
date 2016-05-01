@@ -11,7 +11,7 @@ int streetSize = 9;
 ArrayList<Vehicle> vehicles;
 
 void setup() {
-  size(1120,750);
+  size(920,750);
   initStreet();
   initPaths();
   initVehicle();
@@ -25,7 +25,7 @@ void initStreet(){
       if(i%2 == 0 && j%2 ==2){
         blocks[i][j] = new Block(true);
       }else{
-        blocks[i][j] = new Block(new PVector(blockSize*j+30,blockSize*i+20),new PVector(blockSize*j+30,blockSize*(i+1)+20));
+        blocks[i][j] = new Block(new PVector(blockSize*j+10,blockSize*i+10),new PVector(blockSize*j+10,blockSize*(i+1)+10));
       }
     }
   }
@@ -45,7 +45,7 @@ void initVehicle(){
   // Se colocan los vehiculos en alguna posicion de inicio valida.
   
   vehicles = new ArrayList<Vehicle>();
-  for (int i = 0; i < 12; i++) {
+  for (int i = 0; i < 120; i++) {
     int pathx = (int)random(1);
     int pathy = (int)random(5);
     pathx = (int)random(4);
@@ -67,7 +67,9 @@ void initVehicle(){
         initPosition = blocks[pathy][streetSize-1].partOne.initP;
         break;
     }
-    newVehicle(initPosition.x,initPosition.y);
+    int pathR = (int)random(pathsL.size());
+    newVehicle(initPosition.x,initPosition.y,pathsL.get(pathR));
+    
   }
 
 }
@@ -80,10 +82,9 @@ void draw() {
       p.display();
   }
   
-
   for (Vehicle v : vehicles) {
     // Path following and separation are worked on in this function
-    v.applyBehaviors(vehicles,pathsL.get(4));
+    v.applyBehaviors(vehicles,v.initPath);
     // Call the generic run method (update, borders, display, etc.)
     v.run();
   }
@@ -126,11 +127,11 @@ void newPathHor(Block [] block) {
 }
 
 
-void newVehicle(float x, float y) {
-  float maxspeed = random(2,4);
+void newVehicle(float x, float y,Path init) {
+  float maxspeed = random(2,5);
   float maxforce = 0.3;
   color c = color(random(0,255),random(0,255),random(0,255));
-  vehicles.add(new Vehicle(new PVector(x,y),maxspeed,maxforce,c));
+  vehicles.add(new Vehicle(new PVector(x,y),maxspeed,maxforce,c,init));
 }
 
 void keyPressed() {
@@ -140,7 +141,8 @@ void keyPressed() {
 }
 
 void mousePressed() {
-  newVehicle(mouseX,mouseY);
+  int pathR = (int)random(pathsL.size());
+  newVehicle(mouseX,mouseY,pathsL.get(pathR));
 }
 
 

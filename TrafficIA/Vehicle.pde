@@ -15,9 +15,10 @@ class Vehicle {
   float maxforce;    // Maximum steering force
   float maxspeed;    // Maximum speed
   color c = color(255);
+  Path initPath;
 
     // Constructor initialize all values
-  Vehicle( PVector l, float ms, float mf, color cc) {
+  Vehicle( PVector l, float ms, float mf, color cc, Path init) {
     location = l.get();
     r = 12;
     maxspeed = ms;
@@ -25,6 +26,7 @@ class Vehicle {
     acceleration = new PVector(0, 0);
     velocity = new PVector(maxspeed, 0);
     c = cc;
+    initPath = init;
   }
 
   // A function to deal with path following and separation
