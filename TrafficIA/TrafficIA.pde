@@ -1,3 +1,5 @@
+import java.util.Collections;
+
 boolean debug = false;
 
 
@@ -6,13 +8,13 @@ ArrayList<Path> pathsL = new ArrayList<Path>();
 //Matriz en la cual se manejaran las cosas de las calles.
 Block [][]blocks;
 //Tamaño de las "Ciudad" N X N.
-int streetSize = 9;
-int carNum = 120;
+int streetSize = 7;
+int carNum = 30;
 //Lista de los vehiculos(Agentes).
 ArrayList<Vehicle> vehicles;
 
 void setup() {
-  size(920,750);
+  size(720,750);
   initStreet();
   initPaths();
   initVehicle();
@@ -26,7 +28,7 @@ void initStreet(){
       if(i%2 == 0 && j%2 ==2){
         blocks[i][j] = new Block(true);
       }else{
-        blocks[i][j] = new Block(new PVector(blockSize*j+10,blockSize*i-10),new PVector(blockSize*j+10,blockSize*(i+1)-10));
+        blocks[i][j] = new Block(new PVector(blockSize*j-50,blockSize*i-50),new PVector(blockSize*j-50,blockSize*(i+1)-50));
       }
     }
   }
@@ -69,7 +71,13 @@ void initVehicle(){
         break;
     }
     int pathR = (int)random(pathsL.size());
-    newVehicle(initPosition.x,initPosition.y,pathsL.get(pathR));
+    Path pathInit = new Path();
+    for(Path p:pathsL){
+      if(p.hasPoint(new PVector(initPosition.x,initPosition.y))){
+        pathInit = p;
+      }
+    }
+    newVehicle(initPosition.x,initPosition.y,pathInit);
     
   }
 
@@ -82,10 +90,23 @@ void draw() {
   for(Path p:pathsL){
       p.display();
   }
+  /*
+  for (int i = 0; i < streetSize; i++) {
+    for (int j = 0; j < streetSize; j++) {
+      if(i%2 != 0 && j%2 !=2){
+        blocks[i][j].partOne.render();
+        blocks[i][j].partTwo.render();
+      }
+    }
+  }*/
   
   for (Vehicle v : vehicles) {
     // Path following and separation are worked on in this function
     v.applyBehaviors(vehicles,v.initPath);
+    if((int)random(2) == 1){
+      v.initPath = pathsL.get(0);
+      v.applyBehaviors(vehicles,v.initPath);
+    }
     // Call the generic run method (update, borders, display, etc.)
     v.run();
   }
@@ -108,6 +129,7 @@ void newPathVer(Block [] block) {
     path2.addPointVector(x.partTwo.finalP);
   }
   pathsL.add(path);
+  Collections.reverse(path2.points);
   pathsL.add(path2);
 }
 
@@ -124,6 +146,7 @@ void newPathHor(Block [] block) {
     
   }
   pathsL.add(path);
+  Collections.reverse(path2.points);
   pathsL.add(path2);
 }
 

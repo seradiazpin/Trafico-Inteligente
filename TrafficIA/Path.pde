@@ -49,4 +49,8 @@ class Path {
     }
     endShape(CLOSE);
   }
+  
+  boolean hasPoint(PVector p){
+    return points.contains(p);
+  }
 }

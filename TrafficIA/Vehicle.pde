@@ -60,7 +60,7 @@ class Vehicle {
 
   // This function implements Craig Reynolds' path following algorithm
   // http://www.red3d.com/cwr/steer/PathFollow.html
-  PVector follow(Path p) {
+  PVector follow(Path p){
 
     // Predict location 25 (arbitrary choice) frames ahead
     PVector predict = velocity.get();
