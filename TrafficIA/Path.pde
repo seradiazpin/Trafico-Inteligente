@@ -8,6 +8,7 @@ class Path {
 
   // A Path is an arraylist of points (PVector objects)
   ArrayList<PVector> points;
+  ArrayList<Pheromone> pheromones;
   // A path has a radius, i.e how far is it ok for the boid to wander off
   float radius;
 
@@ -15,16 +16,21 @@ class Path {
     // Arbitrary radius of 20
     radius = 10;
     points = new ArrayList<PVector>();
+    pheromones = new ArrayList<Pheromone>();
   }
+  
+  
 
   // Add a point to the path
   void addPoint(float x, float y) {
     PVector point = new PVector(x, y);
     points.add(point);
+    pheromones.add(new Pheromone(new PVector(x,y),0));
   }
 
   void addPointVector(PVector point) {
     points.add(point);
+    pheromones.add(new Pheromone(point,0));
   }
   // Draw the path
   void display() {
@@ -47,6 +53,10 @@ class Path {
     for (PVector v : points) {
       vertex(v.x, v.y);
     }
+    for(Pheromone ph:pheromones){
+        ph.render();
+    }
+    
     endShape(CLOSE);
   }
   

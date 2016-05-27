@@ -11,15 +11,24 @@ class Pheromone{
     this.value = value;
   }
   
-    void render() {
-      // Simpler boid is just a circle
-      color c = color(255);
+  void render() {
+  // Simpler boid is just a circle
+    if(debugP){
+      color c;
+      if(value >=0 && value <=10){
+        c = color(255);
+      }else if(value >=10 && value <= 20){
+        c = color(50,0,0);
+      }else{
+        c = color(100,0,0);
+      }
       fill(c);
       stroke(0);
       pushMatrix();
       translate(location.x, location.y);
-      ellipse(0, 0, 3, 3);
+      ellipse(0, 0, 10, 10);
       popMatrix();
-     }
+    }
+  }
 
 }

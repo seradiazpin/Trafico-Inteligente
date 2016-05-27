@@ -41,6 +41,17 @@ class Vehicle {
     // Accumulate in acceleration
     applyForce(f);
     applyForce(s);
+    
+    for (int i = 0 ; i < vehicles.size(); i++) {
+      for (int j = 0 ; i < path.pheromones.size(); i++) {
+        Vehicle other = (Vehicle) vehicles.get(i);
+        float d = PVector.dist(location, path.pheromones.get(i).location);
+        if(d<=10){
+          path.pheromones.get(i).value++;
+        }
+      }
+    }
+
   }
 
   void applyForce(PVector force) {
