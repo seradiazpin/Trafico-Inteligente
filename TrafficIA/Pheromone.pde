@@ -15,9 +15,9 @@ class Pheromone{
   // Simpler boid is just a circle
     if(debugP){
       color c;
-      if(value >=0 && value <=10){
+      if(value >=0 && value <=50){
         c = color(255);
-      }else if(value >=10 && value <= 20){
+      }else if(value >=50 && value <= 100){
         c = color(50,0,0);
       }else{
         c = color(100,0,0);
