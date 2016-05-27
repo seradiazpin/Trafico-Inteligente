@@ -146,6 +146,7 @@ class Vehicle {
 
     // Only if the distance is greater than the path's radius do we bother to steer
     if (worldRecord > p.radius) {
+      //System.out.print("NULL-Pos?->"+target.x+", "+target.y);
       return seek(target);
     } 
     else {
@@ -219,6 +220,7 @@ class Vehicle {
   // A method that calculates and applies a steering force towards a target
   // STEER = DESIRED MINUS VELOCITY
   PVector seek(PVector target) {
+    //System.out.print("NULL?->"+target.x+", "+target.y);
     PVector desired = PVector.sub(target, location);  // A vector pointing from the location to the target
     // Normalize desired and scale to maximum speed
     desired.normalize();

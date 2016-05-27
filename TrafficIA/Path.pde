@@ -5,7 +5,6 @@
 // Path Following
 
 class Path {
-
   // A Path is an arraylist of points (PVector objects)
   ArrayList<PVector> points;
   ArrayList<Pheromone> pheromones;

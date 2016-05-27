@@ -1,5 +1,5 @@
 class PathBlock{
-
+  //Punto inicial o final y una direccion para indicar
   PVector initP;
   PVector finalP;
   
