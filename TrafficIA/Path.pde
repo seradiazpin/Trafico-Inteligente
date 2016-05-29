@@ -13,7 +13,7 @@ class Path {
 
   Path() {
     // Arbitrary radius of 20
-    radius = 10;
+    radius = 5;
     points = new ArrayList<PVector>();
     pheromones = new ArrayList<Pheromone>();
   }
@@ -30,6 +30,7 @@ class Path {
   void addPointVector(PVector point) {
     points.add(point);
     pheromones.add(new Pheromone(point,0));
+    
   }
   // Draw the path
   void display() {

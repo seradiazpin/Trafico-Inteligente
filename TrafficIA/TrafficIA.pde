@@ -81,7 +81,7 @@ void initVehicle() {
 PVector initPosition(){
   int pathx = (int)random(1);
     int pathy = (int)random(streetSizeV);
-    pathx = (int)random(4);
+    pathx = (int)random(7);
     while (pathy %2 == 0) {
       pathy = (int)random(streetSizeV);
     }
@@ -161,6 +161,7 @@ void newPathHor(Block [] block) {
   pathsL.add(path);
   Collections.reverse(path2.points);
   pathsL.add(path2);
+  
 }
 
 /*
@@ -190,7 +191,7 @@ void keyPressed() {
 */
 void mousePressed() {
   int pathR = (int)random(pathsL.size());
-  newVehicle(mouseX, mouseY, pathsL.get(pathR));
+  newVehicle(mouseX, mouseY, pathsL.get(0));
 }
 
 /*

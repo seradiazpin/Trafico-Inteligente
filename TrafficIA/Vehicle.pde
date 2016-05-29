@@ -37,21 +37,25 @@ class Vehicle {
     PVector s = separate(vehicles);
     // Arbitrary weighting
     f.mult(3);
-    s.mult(1);
+    s.mult(2);
     // Accumulate in acceleration
     applyForce(f);
     applyForce(s);
     
     for (int i = 0 ; i < vehicles.size(); i++) {
-      for (int j = 0 ; i < path.pheromones.size(); i++) {
+      for (int j = 0 ; j < path.pheromones.size(); j++) {
         Vehicle other = (Vehicle) vehicles.get(i);
-        float d = PVector.dist(location, path.pheromones.get(i).location);
-        if(d<=10){
-          path.pheromones.get(i).value++;
+        float d = PVector.dist(location, path.pheromones.get(j).location);
+        if(d<=5){
+          path.pheromones.get(j).value += 5;
+        }else{
+          if(path.pheromones.get(j).value >0){
+            path.pheromones.get(j).value -= 0.09;
+          }
         }
+        //other.arrive(path.points.get(path.points.size()-1),path.pheromones.get(j).value);     
       }
     }
-
   }
 
   void applyForce(PVector force) {
@@ -59,7 +63,10 @@ class Vehicle {
     acceleration.add(force);
   }
 
-
+  void quitForce(PVector force) {
+    // We could add mass here if we want A = F / M
+    acceleration.sub(force);
+  }
 
   // Main "run" function
   public void run() {
@@ -220,7 +227,6 @@ class Vehicle {
   // A method that calculates and applies a steering force towards a target
   // STEER = DESIRED MINUS VELOCITY
   PVector seek(PVector target) {
-    //System.out.print("NULL?->"+target.x+", "+target.y);
     PVector desired = PVector.sub(target, location);  // A vector pointing from the location to the target
     // Normalize desired and scale to maximum speed
     desired.normalize();
@@ -229,6 +235,26 @@ class Vehicle {
     PVector steer = PVector.sub(desired, velocity);
     steer.limit(maxforce);  // Limit to maximum steering force
     return steer;
+  }
+  
+  // A method that calculates a steering force towards a target
+  // STEER = DESIRED MINUS VELOCITY
+  void arrive(PVector target,double phero) {
+    
+    PVector desired = PVector.sub(target,location);  // A vector pointing from the location to the target
+    float d = desired.mag();
+    // Scale with arbitrary damping within 100 pixels
+    if (phero < 200) {
+      float m = map(d,0,100,0,maxspeed);
+      desired.setMag(m);
+    } else {
+      desired.setMag(maxspeed);
+    }
+
+    // Steering = Desired minus Velocity
+    PVector steer = PVector.sub(desired,velocity);
+    steer.limit(maxforce);  // Limit to maximum steering force
+    applyForce(steer);
   }
 
 
@@ -241,6 +267,8 @@ class Vehicle {
     ellipse(0, 0, r, r);
     popMatrix();
   }
+  
+  
 
   // Wraparound
   void borders() {
