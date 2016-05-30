@@ -13,7 +13,7 @@ class Path {
 
   Path() {
     // Arbitrary radius of 20
-    radius = 5;
+    radius = 2;
     points = new ArrayList<PVector>();
     pheromones = new ArrayList<Pheromone>();
   }

@@ -44,10 +44,16 @@ class Vehicle {
     
     for (int i = 0 ; i < vehicles.size(); i++) {
       for (int j = 0 ; j < path.pheromones.size(); j++) {
-        Vehicle other = (Vehicle) vehicles.get(i);
+        //Vehicle other = (Vehicle) vehicles.get(i);
         float d = PVector.dist(location, path.pheromones.get(j).location);
         if(d<=5){
           path.pheromones.get(j).value += 5;
+          if(path.pheromones.get(j).value > 200 && d<=2){
+            this.velocity.mult(1/5);
+          }else{
+            //System.out.println("LOL MAX");
+             this.velocity.mult(5);
+          }
         }else{
           if(path.pheromones.get(j).value >0){
             path.pheromones.get(j).value -= 0.09;
@@ -266,6 +272,8 @@ class Vehicle {
     translate(location.x, location.y);
     ellipse(0, 0, r, r);
     popMatrix();
+    fill(color(0));
+    //text("Velocidad"+velocity,(float)location.x, (float)location.y);
   }
   
   

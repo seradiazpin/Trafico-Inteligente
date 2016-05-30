@@ -11,9 +11,9 @@ ArrayList<Path> pathsL = new ArrayList<Path>();
 Block [][]blocks;
 
 //Tamaño de las "Ciudad" V X H.
-int streetSizeV = 7;
+int streetSizeV = 2;
 int streetSizeH = 8;
-int carNum = 30;
+int carNum = 0;
 
 //Lista de los vehiculos(Agentes).
 ArrayList<Vehicle> vehicles;
@@ -168,7 +168,8 @@ void newPathHor(Block [] block) {
 * Crear un nuevo vehiculo al sistema
 */
 void newVehicle(float x, float y, Path init) {
-  float maxspeed = random(2, 5);
+  //float maxspeed = random(2, 5);
+  float maxspeed = 5;
   float maxforce = 0.3;
   color c = color(random(0, 255), random(0, 255), random(0, 255));
   vehicles.add(new Vehicle(new PVector(x, y), maxspeed, maxforce, c, init));
