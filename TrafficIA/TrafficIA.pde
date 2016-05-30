@@ -11,7 +11,7 @@ ArrayList<Path> pathsL = new ArrayList<Path>();
 Block [][]blocks;
 
 //Tamaño de las "Ciudad" V X H.
-int streetSizeV = 2;
+int streetSizeV = 7;
 int streetSizeH = 8;
 int carNum = 0;
 
@@ -20,7 +20,7 @@ ArrayList<Vehicle> vehicles;
 
 //Se inicializan todos los valores
 void setup() {
-  size(720, 750);
+  size(720, 720);
   initStreet();
   initPaths();
   initVehicle();

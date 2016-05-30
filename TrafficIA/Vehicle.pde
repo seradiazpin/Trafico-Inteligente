@@ -1,13 +1,6 @@
-// The Nature of Code
-// Daniel Shiffman
-// http://natureofcode.com
-
-// Path Following
-// Vehicle class
-
 class Vehicle {
 
-  // All the usual stuff
+  // Caracteristicas del vehiculo
   PVector location;
   PVector velocity;
   PVector acceleration;
@@ -41,7 +34,7 @@ class Vehicle {
     // Accumulate in acceleration
     applyForce(f);
     applyForce(s);
-    
+    //Miramos las feromonas que esten cerca de vehiculo
     for (int i = 0 ; i < vehicles.size(); i++) {
       for (int j = 0 ; j < path.pheromones.size(); j++) {
         //Vehicle other = (Vehicle) vehicles.get(i);
@@ -265,7 +258,7 @@ class Vehicle {
 
 
   void render() {
-    // Simpler boid is just a circle
+    // El vehiculo es representado por un circulo
     fill(c);
     stroke(0);
     pushMatrix();
@@ -278,7 +271,7 @@ class Vehicle {
   
   
 
-  // Wraparound
+//Para que los carros regresen al inicio de su carril cuando salen de la pantalla
   void borders() {
     if (location.x < -r) location.x = width+r;
     if (location.y < -r) location.y = height+r;

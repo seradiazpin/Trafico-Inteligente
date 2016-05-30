@@ -1,9 +1,3 @@
-// The Nature of Code
-// Daniel Shiffman
-// http://natureofcode.com
-
-// Path Following
-
 class Path {
   // A Path is an arraylist of points (PVector objects)
   ArrayList<PVector> points;
@@ -13,7 +7,7 @@ class Path {
 
   Path() {
     // Arbitrary radius of 20
-    radius = 2;
+    radius = 10;
     points = new ArrayList<PVector>();
     pheromones = new ArrayList<Pheromone>();
   }
